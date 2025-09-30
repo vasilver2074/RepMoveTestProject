@@ -24,10 +24,10 @@ export class SignUpPage {
     await this.page.locator('[formcontrolname="lastName"] input').fill(lastName);
     await this.page.locator('[formcontrolname="companyName"] input').fill(companyName); 
     await this.page.locator('[formcontrolname="industry"] span .ng-arrow').selectOption("Food & Beverage");
-    await this.page.locator('[formcontrolname="email"] input').fill(loginData.email);
+    await this.page.locator('[formcontrolname="email"] input').fill(loginData.valid_email);
     await this.page.getByPlaceholder("Country").selectOption("+380");
     await this.page.locator('[formcontrolname="email"] input').fill(phoneNumber);
-    await this.page.locator('[formcontrolname="password"] input').fill(loginData.password);
+    await this.page.locator('[formcontrolname="password"] input').fill(loginData.valid_password);
     await this.page.click("button[type='submit']");
   }
 }
