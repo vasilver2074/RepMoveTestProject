@@ -3,11 +3,26 @@ import { SignUpPage } from "../pages/signUp.page";
 
 test.describe("Sign Up Page tests", () => {
 
-    test("authorization: successful login", async ({ page }) => {
-        const signUpPage = new SignUpPage(page);
+    let signUpPage: SignUpPage;
 
+    test.beforeEach(async ({ page }) => {
+
+        signUpPage = new SignUpPage(page);
         await signUpPage.navigateTo();
+    });
+
+    test("authorization: successful Sign Up", async ({ page }) => {
+        
         await signUpPage.signUp();
+        await signUpPage.waitForNavigation();
+
+        expect(page.url()).toContain("/dashboard");
+    });
+
+    test("authorization: duplicate Sign Up", async ({ page }) => {
+        
+        await signUpPage.signUp();
+        await signUpPage.waitForNavigation();
 
         expect(page.url()).toContain("/dashboard");
     });
