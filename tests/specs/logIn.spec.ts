@@ -8,7 +8,7 @@ test.describe("Login Page tests", () => {
     test.beforeEach(async ({ page }) => {
 
         loginPage = new LoginPage(page);
-        await loginPage.navigateTo("https://dev-repmove-enterprise.web.app/auth/sign-in");
+        await loginPage.navigateTo("/auth/sign-in");
     });
 
     test("authorization: successful login", async ({ page }) => {
