@@ -1,4 +1,4 @@
-import { expect, Page, test } from "@playwright/test";
+import { expect, Locator, Page, test } from "@playwright/test";
 import { getLoginData } from "../utils/utils";
 import { BasePage } from "./basePage.page";
 
@@ -7,24 +7,36 @@ export class LoginPage extends BasePage {
     super(page);
   }
 
+  public get email(): Locator {
+    return this.page.locator('[formcontrolname="email"] input');
+  }
+
+  public get password(): Locator {
+    return this.page.locator('[formcontrolname="password"] input');
+  }
+
+  public get submitButton(): Locator {
+    return this.page.locator("button[type='submit']");
+  }
+
   async successfulLogin() {
     const loginData = getLoginData();
-    await this.page.locator('[formcontrolname="email"] input').fill(loginData.valid_email);
-    await this.page.locator('[formcontrolname="password"] input').fill(loginData.valid_password);
-    await this.page.click("button[type='submit']");
+    await this.email.fill(loginData.valid_email);
+    await this.password.fill(loginData.valid_password);
+    await this.submitButton.click();
   }
 
   async incorrectPasswordLogin(){
     const loginData = getLoginData();
-    await this.page.locator('[formcontrolname="email"] input').fill(loginData.valid_email);
-    await this.page.locator('[formcontrolname="password"] input').fill(loginData.invalid_password);
-    await this.page.click("button[type='submit']");
+    await this.email.fill(loginData.valid_email);
+    await this.password.fill(loginData.invalid_password);
+    await this.submitButton.click();
   }
 
   async emptyEmailLogin(){
     const loginData = getLoginData();
-    await this.page.locator('[formcontrolname="password"] input').fill(loginData.valid_password);
-    await this.page.click("button[type='submit']");
+    await this.password.fill(loginData.valid_password);
+    await this.submitButton.click();
   }
 
   async getErrorMessage(){
