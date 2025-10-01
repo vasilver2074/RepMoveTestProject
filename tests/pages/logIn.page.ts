@@ -1,17 +1,10 @@
 import { expect, Page, test } from "@playwright/test";
 import { getLoginData } from "../utils/utils";
+import { BasePage } from "./basePage.page";
 
-export class LoginPage {
-  constructor(private page: Page) {
-    this.page = page;
-  }
-
-  async navigateTo() {
-    await this.page.goto("https://dev-repmove-enterprise.web.app/auth/sign-in");
-  }
-
-  async waitForNavigation(){
-    await this.page.waitForURL("**/dashboard")
+export class LoginPage extends BasePage {
+  constructor(page: Page) {
+    super(page);
   }
 
   async successfulLogin() {
@@ -26,14 +19,6 @@ export class LoginPage {
     await this.page.locator('[formcontrolname="email"] input').fill(loginData.valid_email);
     await this.page.locator('[formcontrolname="password"] input').fill(loginData.invalid_password);
     await this.page.click("button[type='submit']");
-  }
-
-  async getErrorAlert(){
-    this.page.on("dialog", async (dialog) => {
-    expect(dialog.type()).toContain("alert");
-    expect(dialog.message()).toContain("Invalid to login");
-    await dialog.accept();
-  });
   }
 
   async emptyEmailLogin(){

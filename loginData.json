@@ -1,6 +1,7 @@
 {
-    "valid_email": "test@gmail.com",
+    "valid_email": "test1@gmail.com",
     "invalid_email": "test123@gmail.com",
-    "valid_password": "test123",
-    "invalid_password": "test456"
+    "valid_password": "test1234",
+    "invalid_password": "test456",
+    "phone_number": "501794556"
 }

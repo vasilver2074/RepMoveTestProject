@@ -8,22 +8,21 @@ test.describe("Sign Up Page tests", () => {
     test.beforeEach(async ({ page }) => {
 
         signUpPage = new SignUpPage(page);
-        await signUpPage.navigateTo();
+        await signUpPage.navigateTo("https://dev-repmove-enterprise.web.app/auth/sign-up");
     });
 
     test("authorization: successful Sign Up", async ({ page }) => {
         
         await signUpPage.signUp();
-        await signUpPage.waitForNavigation();
+        await signUpPage.waitForNavigation("**/dashboard");
 
         expect(page.url()).toContain("/dashboard");
     });
 
     test("authorization: duplicate Sign Up", async ({ page }) => {
         
-        await signUpPage.signUp();
-        await signUpPage.waitForNavigation();
+        await signUpPage.duplicateSignUp();
+        await signUpPage.getErrorAlert("Invalid to sign up");
 
-        expect(page.url()).toContain("/dashboard");
     });
 });
