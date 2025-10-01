@@ -19,17 +19,10 @@ export class LoginPage extends BasePage {
     return this.page.locator("button[type='submit']");
   }
 
-  async successfulLogin() {
+  async login(email: string, password: string) {
     const loginData = getLoginData();
-    await this.email.fill(loginData.valid_email);
-    await this.password.fill(loginData.valid_password);
-    await this.submitButton.click();
-  }
-
-  async incorrectPasswordLogin(){
-    const loginData = getLoginData();
-    await this.email.fill(loginData.valid_email);
-    await this.password.fill(loginData.invalid_password);
+    await this.email.fill(email);
+    await this.password.fill(password);
     await this.submitButton.click();
   }
 
@@ -40,8 +33,8 @@ export class LoginPage extends BasePage {
   }
 
   async getErrorMessage(){
-    await expect(this.page.locator('.__error')).toBeVisible();
-    await expect(this.page.locator('.__error')).toHaveText('Please, enter your email address');
+    await expect.soft(this.page.locator('.__error')).toBeVisible();
+    await expect.soft(this.page.locator('.__error')).toHaveText('Please, enter your email address');
   }
 
 }

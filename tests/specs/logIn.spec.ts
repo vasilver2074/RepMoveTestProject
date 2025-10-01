@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { LoginPage } from "../pages/logIn.page";
+import { getLoginData } from "../utils/utils";
 
 test.describe("Login Page tests", () => {
     let loginPage: LoginPage;
@@ -12,15 +13,16 @@ test.describe("Login Page tests", () => {
 
     test("authorization: successful login", async ({ page }) => {
         
-        await loginPage.successfulLogin();
+        const loginData = getLoginData();
+        await loginPage.login(loginData.valid_email, loginData.valid_password);
         await loginPage.waitForNavigation("**/dashboard");
 
         expect.soft(page.url()).toContain("/dashboard");
     });
 
     test("authorization: incorrect password login", async ({ page }) => {
-        
-        await loginPage.incorrectPasswordLogin();
+        const loginData = getLoginData();
+        await loginPage.login(loginData.valid_email, loginData.invalid_password);
         await loginPage.getErrorAlert("Invalid to login");
         
     });
